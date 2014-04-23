@@ -103,21 +103,12 @@ void signal_handler(int sig)
     LOG("force cancellation of threads and cleanup resources\n");
     for(i = 0; i < global.incnt; i++) {
         global.in[i].stop(i);
-        /*for (j = 0; j<MAX_PLUGIN_ARGUMENTS; j++) {
-            if (global.in[i].param.argv[j] != NULL) {
-                free(global.in[i].param.argv[j]);
-            }
-        }*/
     }
 
     for(i = 0; i < global.outcnt; i++) {
         global.out[i].stop(global.out[i].param.id);
         pthread_cond_destroy(&global.in[i].db_update);
         pthread_mutex_destroy(&global.in[i].db);
-        /*for (j = 0; j<MAX_PLUGIN_ARGUMENTS; j++) {
-            if (global.out[i].param.argv[j] != NULL)
-                free(global.out[i].param.argv[j]);
-        }*/
     }
     usleep(1000 * 1000);
 
